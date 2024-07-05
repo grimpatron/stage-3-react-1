@@ -1,37 +1,41 @@
-import { Component } from 'react';
-import './Main.css';
+import { Component } from "react";
+import "./Main.css";
+
+interface ItemInterface {
+  name: string;
+}
 
 interface PropsInterface {
-  searchResults: Array<object>;
+  searchResults: ItemInterface[];
 }
 
 class Main extends Component<PropsInterface> {
+  checkValue(value: string | []) {
+    if (Array.isArray(value)) {
+      const listItems = value.map((item, index) => <li key={index}>{item}</li>);
+      return <ul>{listItems}</ul>;
+    }
+    return value;
+  }
+
   render() {
     const { searchResults } = this.props;
-    console.log('main =>', searchResults.length ,searchResults);
-    
-    const planetInfoTest = {
-      name: 'Yavin IV',
-      rotation_period: '24',
-      orbital_period: '4818',
-      diameter: '10200',
-      climate: 'temperate, tropical',
-      gravity: '1 standard',
-      terrain: 'jungle, rainforests',
-      surface_water: '8',
-      population: '1000',
-    };
-    // теперь можно избавляться, и переписать под несколько объектов 
 
     return (
-      <main className='main'>
-        <ul className='list'>
-          {Object.entries(planetInfoTest).map(([key, value]) => (
-            <li key={key}>
-              {key}: {value}
-            </li>
-          ))}
-        </ul>
+      <main className="main">
+        {searchResults.map((character: ItemInterface) => (
+          <div className="result-block" key={character.name}>
+            <h3 className="result-title">Name: {character.name}</h3>
+
+            <ul className="result-list">
+              {Object.entries(character).map(([key, value]) => (
+                <li>
+                  <strong>{key}:</strong> {this.checkValue(value)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </main>
     );
   }
