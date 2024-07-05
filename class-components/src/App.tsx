@@ -1,21 +1,14 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Header from "./components/header/Header.tsx";
+import Main from "./components/main/Main.tsx";
 
 function App() {
-  // const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1>Star Wars API</h1>
-      <div className="card">
-        {/* <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button> */}
-      </div>
+      <Header />
+      <Main />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
