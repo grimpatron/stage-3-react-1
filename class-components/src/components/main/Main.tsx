@@ -1,8 +1,15 @@
 import { Component } from 'react';
 import './Main.css';
 
-class Main extends Component {
+interface PropsInterface {
+  searchResults: Array<object>;
+}
+
+class Main extends Component<PropsInterface> {
   render() {
+    const { searchResults } = this.props;
+    console.log('main =>', searchResults.length ,searchResults);
+    
     const planetInfoTest = {
       name: 'Yavin IV',
       rotation_period: '24',
@@ -14,6 +21,7 @@ class Main extends Component {
       surface_water: '8',
       population: '1000',
     };
+    // теперь можно избавляться, и переписать под несколько объектов 
 
     return (
       <main className='main'>

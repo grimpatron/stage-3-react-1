@@ -12,14 +12,20 @@ const section: string[] = [
 // interface baseParameters {
 //   name: string;
 // }
+// interface PropsInterface {
+//   searchResults: Array<object>;
+// }
 
 interface HeaderState {
   parameters: string;
   searchQuery: string;
 }
+interface PropsInterface {
+  updateSearchResults: (results: object[]) => void;
+}
 
-class Header extends Component<object, HeaderState> {
-  constructor(props: object) {
+class Header extends Component<PropsInterface, HeaderState> {
+  constructor(props: PropsInterface) {
     super(props);
     this.state = {
       parameters: "",
@@ -41,6 +47,7 @@ class Header extends Component<object, HeaderState> {
       .then((response) => response.json())
       .then((data) => {
         this.setState({ parameters: data.results });
+        this.props.updateSearchResults(data.results);
         console.log({ characters: data.results });
       })
       .catch((error) => console.error("Error receiving data:", error));
@@ -49,7 +56,9 @@ class Header extends Component<object, HeaderState> {
   handleSearch = async () => {
     const { searchQuery } = this.state;
     const searchResults = await searchInAllSections(searchQuery);
-    this.setState({ parameters: searchResults });
+    // отправляем в MAIN
+    this.props.updateSearchResults(searchResults);
+    this.setState({ parameters: searchResults }); // получается уже не  надо
     // this.fetchCharacters();
   };
 
@@ -84,6 +93,8 @@ const searchInAllSections = async (searchQuery: string) => {
       console.error(`Error fetching data from ${sectionName}:`, error);
     }
   }
-  console.log("No results found in any section.");
+  console.log("No results.");
   return [];
 };
+
+// посмотреть что там с жизненным циклом.
