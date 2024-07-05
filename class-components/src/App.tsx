@@ -7,7 +7,9 @@ interface PropsInterface {}
 interface StateInterface {
   parameters: Array<object>;
 }
-
+interface ItemInterface {
+  name: string;
+}
 class App extends Component<PropsInterface, StateInterface> {
   constructor(props: PropsInterface) {
     super(props);
@@ -24,7 +26,8 @@ class App extends Component<PropsInterface, StateInterface> {
     return (
       <>
         <Header updateSearchResults={this.updateSearchResults} />
-        <Main searchResults={this.state.parameters} />
+        {/* <Main searchResults={this.state.parameters} /> */}
+        <Main searchResults={this.state.parameters as ItemInterface[]} />
       </>
     );
   }

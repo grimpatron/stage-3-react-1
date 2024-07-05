@@ -29,7 +29,7 @@ class Main extends Component<PropsInterface> {
 
             <ul className="result-list">
               {Object.entries(character).map(([key, value]) => (
-                <li>
+                <li key={key}>
                   <strong>{key}:</strong> {this.checkValue(value)}
                 </li>
               ))}

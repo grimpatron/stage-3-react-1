@@ -35,6 +35,7 @@ class Header extends Component<PropsInterface, HeaderState> {
 
   componentDidMount() {
     this.fetchCharacters();
+    this.loadLastRequire();
   }
 
   fetchCharacters = () => {
@@ -48,29 +49,43 @@ class Header extends Component<PropsInterface, HeaderState> {
       .then((data) => {
         this.setState({ parameters: data.results });
         this.props.updateSearchResults(data.results);
-        console.log({ characters: data.results });
+        // console.log({ characters: data.results });
       })
       .catch((error) => console.error("Error receiving data:", error));
   };
 
   handleSearch = async () => {
+    // Тут будет добавление в локалку.
     const { searchQuery } = this.state;
     const searchResults = await searchInAllSections(searchQuery);
     // отправляем в MAIN
     this.props.updateSearchResults(searchResults);
     this.setState({ parameters: searchResults }); // получается уже не  надо
     // this.fetchCharacters();
+    this.saveLastRequire(searchQuery)
   };
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchQuery: event.target.value });
   };
 
+  saveLastRequire(query: string) {
+    localStorage.setItem('last-require', query)
+  }
+
+  loadLastRequire() {
+    const inputEl = document.querySelector('#input') as HTMLInputElement;
+    const lastRequire = localStorage.getItem('last-require');
+    if (lastRequire !== null) {
+      inputEl.value = lastRequire;
+    }
+  }
+
   render() {
     return (
       <header className="top-bar">
         <h1 className="top-bar__title">Star Wars API</h1>
-        <input type="text" name="" id="" onChange={this.handleInputChange} />
+        <input type="text" name="" id="input" onChange={this.handleInputChange} />
         <button onClick={this.handleSearch}>Search</button>
       </header>
     );
@@ -98,3 +113,15 @@ const searchInAllSections = async (searchQuery: string) => {
 };
 
 // посмотреть что там с жизненным циклом.
+//  загрузка из локалки
+// function loadLastRequire() {
+//   const inputEl = document.querySelector('#input') as HTMLInputElement;
+//   const lastRequire = localStorage.getItem('last-require');
+//   if (lastRequire !== null) {
+//     inputEl.value = lastRequire;
+//   }
+// }
+
+// function saveLastRequire(query: string) {
+//   localStorage.setItem('last-require', query)
+// }
