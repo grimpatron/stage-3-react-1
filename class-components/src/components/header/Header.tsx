@@ -9,19 +9,14 @@ const section: string[] = [
   "starships",
 ];
 
-// interface baseParameters {
-//   name: string;
-// }
-// interface PropsInterface {
-//   searchResults: Array<object>;
-// }
-
 interface HeaderState {
   parameters: string;
   searchQuery: string;
+  hasError: boolean;
 }
 interface PropsInterface {
   updateSearchResults: (results: object[]) => void;
+  handleBreak: (results: object[]) => void;
 }
 
 class Header extends Component<PropsInterface, HeaderState> {
@@ -30,6 +25,7 @@ class Header extends Component<PropsInterface, HeaderState> {
     this.state = {
       parameters: "",
       searchQuery: "",
+      hasError: false,
     };
   }
 
@@ -49,20 +45,18 @@ class Header extends Component<PropsInterface, HeaderState> {
       .then((data) => {
         this.setState({ parameters: data.results });
         this.props.updateSearchResults(data.results);
-        // console.log({ characters: data.results });
       })
       .catch((error) => console.error("Error receiving data:", error));
   };
 
   handleSearch = async () => {
-    // Тут будет добавление в локалку.
     const { searchQuery } = this.state;
-    const searchResults = await searchInAllSections(searchQuery);
-    // отправляем в MAIN
-    this.props.updateSearchResults(searchResults);
-    this.setState({ parameters: searchResults }); // получается уже не  надо
-    // this.fetchCharacters();
-    this.saveLastRequire(searchQuery)
+    const searchQueryTrim = searchQuery.trim();
+    const searchResults = await searchInAllSections(searchQueryTrim);
+    
+    this.props.updateSearchResults(searchResults); // отправляем в MAIN
+    this.setState({ parameters: searchResults });
+    this.saveLastRequire(searchQueryTrim) // добавление в LS.
   };
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,12 +75,24 @@ class Header extends Component<PropsInterface, HeaderState> {
     }
   }
 
+  handleBreak = () => {
+    this.setState({ hasError: true });
+  };
+  componentDidUpdate() {
+    if (this.state.hasError) {
+      throw new Error("Ошибка!");
+    }
+  }
+  
+
   render() {
     return (
       <header className="top-bar">
         <h1 className="top-bar__title">Star Wars API</h1>
         <input type="text" name="" id="input" onChange={this.handleInputChange} />
         <button onClick={this.handleSearch}>Search</button>
+        <button onClick={this.handleBreak}>💀</button>
+        {/* <button onClick={() => this.props.handleBreak([])}>💀</button> */}
       </header>
     );
   }
@@ -104,24 +110,9 @@ const searchInAllSections = async (searchQuery: string) => {
         console.log(`Results in ${sectionName}:`, data.results);
         return data.results;
       }
-    } catch (error) {
-      console.error(`Error fetching data from ${sectionName}:`, error);
-    }
+    } catch (error) { console.error(`Error:`, error) }
   }
   console.log("No results.");
   return [];
 };
 
-// посмотреть что там с жизненным циклом.
-//  загрузка из локалки
-// function loadLastRequire() {
-//   const inputEl = document.querySelector('#input') as HTMLInputElement;
-//   const lastRequire = localStorage.getItem('last-require');
-//   if (lastRequire !== null) {
-//     inputEl.value = lastRequire;
-//   }
-// }
-
-// function saveLastRequire(query: string) {
-//   localStorage.setItem('last-require', query)
-// }
