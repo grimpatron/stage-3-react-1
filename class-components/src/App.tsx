@@ -24,15 +24,11 @@ class App extends Component<PropsInterface, StateInterface> {
     this.setState({ parameters: searchResults });
   };
 
-  handleBreak = () => {
-    // throw new Error("Тестовая ошибка!");
-  };
-
   render() {
     return (
       <>
         <ErrorBoundary>
-          <Header updateSearchResults={this.updateSearchResults} handleBreak={this.handleBreak} />
+          <Header updateSearchResults={this.updateSearchResults} />
           <Main searchResults={this.state.parameters as ItemInterface[]} />
         </ErrorBoundary>
       </>
@@ -42,9 +38,10 @@ class App extends Component<PropsInterface, StateInterface> {
 
 export default App;
 
-
-
-class ErrorBoundary extends Component<{ children?: React.ReactNode }, { hasError: boolean }> {
+class ErrorBoundary extends Component<
+  { children?: React.ReactNode },
+  { hasError: boolean }
+> {
   constructor(props: { children?: React.ReactNode }) {
     super(props);
     this.state = {
@@ -62,11 +59,15 @@ class ErrorBoundary extends Component<{ children?: React.ReactNode }, { hasError
 
   render() {
     if (this.state.hasError) {
-      return <h1>Congratulations, you've broken the application.</h1>;
+      return (
+        <>
+          <h2>💀 💀 💀</h2>
+          <h3>You've just broken the application.</h3>
+          <h2>💀 💀 💀</h2>
+        </>
+      );
     }
 
-    return this.props.children || null;
+    return this.props.children;
   }
 }
-
-

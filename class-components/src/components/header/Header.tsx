@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Header.css";
-const section: string[] = [
+
+const apiSections: string[] = [
   "people",
   "planets",
   "films",
@@ -9,110 +10,104 @@ const section: string[] = [
   "starships",
 ];
 
-interface HeaderState {
-  parameters: string;
+interface HeaderStateInterface {
+  searchResults: string;
   searchQuery: string;
   hasError: boolean;
 }
+
 interface PropsInterface {
   updateSearchResults: (results: object[]) => void;
-  handleBreak: (results: object[]) => void;
 }
 
-class Header extends Component<PropsInterface, HeaderState> {
+class Header extends Component<PropsInterface, HeaderStateInterface> {
   constructor(props: PropsInterface) {
     super(props);
     this.state = {
-      parameters: "",
+      searchResults: "",
       searchQuery: "",
       hasError: false,
     };
   }
 
   componentDidMount() {
-    this.fetchCharacters();
-    this.loadLastRequire();
+    this.loadLastSearch();
   }
 
-  fetchCharacters = () => {
-    const { searchQuery } = this.state;
-    const apiUrl = searchQuery
-      ? `https://swapi.dev/api/${section[0]}/?search=${encodeURIComponent(searchQuery)}`
-      : `https://swapi.dev/api/${section[0]}`;
-
-    fetch(apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ parameters: data.results });
-        this.props.updateSearchResults(data.results);
-      })
-      .catch((error) => console.error("Error receiving data:", error));
+  fetchData = async (apiUrl: string) => {
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      return data.results;
+    } catch (error) {
+      console.error("Error receiving data:", error);
+      return [];
+    }
   };
 
-  handleSearch = async () => {
+  searchAllSections = () => {
     const { searchQuery } = this.state;
-    const searchQueryTrim = searchQuery.trim();
-    const searchResults = await searchInAllSections(searchQueryTrim);
-    
-    this.props.updateSearchResults(searchResults); // отправляем в MAIN
-    this.setState({ parameters: searchResults });
-    this.saveLastRequire(searchQueryTrim) // добавление в LS.
+    const trimmedQuery = searchQuery.trim();
+
+    const fetchPromises = apiSections.map((sectionName) => {
+      const apiUrl = `https://swapi.dev/api/${sectionName}/?search=${encodeURIComponent(trimmedQuery)}`;
+      return this.fetchData(apiUrl);
+    });
+
+    Promise.all(fetchPromises)
+      .then((results) => {
+        const combinedResults = results.flat();
+        this.props.updateSearchResults(combinedResults);
+        this.setState({ searchResults: JSON.stringify(combinedResults) });
+        this.saveLastSearch(trimmedQuery);
+      })
+      .catch((error) => console.error("Error fetching characters:", error));
   };
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchQuery: event.target.value });
   };
 
-  saveLastRequire(query: string) {
-    localStorage.setItem('last-require', query)
+  saveLastSearch(query: string) {
+    localStorage.setItem("last-search", query);
   }
 
-  loadLastRequire() {
-    const inputEl = document.querySelector('#input') as HTMLInputElement;
-    const lastRequire = localStorage.getItem('last-require');
-    if (lastRequire !== null) {
-      inputEl.value = lastRequire;
+  loadLastSearch() {
+    const inputEl = document.querySelector("#input") as HTMLInputElement;
+    const lastSearch = localStorage.getItem("last-search");
+    if (lastSearch !== null) {
+      inputEl.value = lastSearch;
+      this.setState({ searchQuery: lastSearch }, this.searchAllSections);
+    } else {
+      this.searchAllSections();
     }
   }
 
   handleBreak = () => {
     this.setState({ hasError: true });
   };
+
   componentDidUpdate() {
     if (this.state.hasError) {
-      throw new Error("Ошибка!");
+      throw new Error("Error handle!");
     }
   }
-  
 
   render() {
     return (
       <header className="top-bar">
         <h1 className="top-bar__title">Star Wars API</h1>
-        <input type="text" name="" id="input" onChange={this.handleInputChange} />
-        <button onClick={this.handleSearch}>Search</button>
+        <input
+          type="text"
+          name="search-input"
+          id="input"
+          onChange={this.handleInputChange}
+        />
+        <button onClick={this.searchAllSections}>Search</button>
         <button onClick={this.handleBreak}>💀</button>
-        {/* <button onClick={() => this.props.handleBreak([])}>💀</button> */}
       </header>
     );
   }
 }
 
 export default Header;
-
-const searchInAllSections = async (searchQuery: string) => {
-  for (const sectionName of section) {
-    const apiUrl = `https://swapi.dev/api/${sectionName}/?search=${encodeURIComponent(searchQuery)}`;
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      if (data.results.length > 0) {
-        console.log(`Results in ${sectionName}:`, data.results);
-        return data.results;
-      }
-    } catch (error) { console.error(`Error:`, error) }
-  }
-  console.log("No results.");
-  return [];
-};
-
