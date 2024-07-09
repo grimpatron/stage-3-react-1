@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import './Header.css';
+import Loader from '../loader/Loadet';
 
 const apiSections: string[] = ['people', 'planets', 'films', 'species', 'vehicles', 'starships'];
 
 interface HeaderStateInterface {
   searchResults: string;
   searchQuery: string;
+  isLoading: boolean;
   hasError: boolean;
 }
 
@@ -19,6 +21,7 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
     this.state = {
       searchResults: '',
       searchQuery: '',
+      isLoading: false,
       hasError: false,
     };
   }
@@ -47,6 +50,8 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
       return this.fetchData(apiUrl);
     });
 
+    this.setState({ isLoading: true });
+
     Promise.all(fetchPromises)
       .then(results => {
         const combinedResults = results.flat();
@@ -54,7 +59,10 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
         this.setState({ searchResults: JSON.stringify(combinedResults) });
         this.saveLastSearch(trimmedQuery);
       })
-      .catch(error => console.error('Error fetching characters:', error));
+      .catch(error => console.error('Error fetching characters:', error))
+      .finally(() => {
+        this.setState({ isLoading: false });
+      });
   };
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,12 +95,15 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
   }
 
   render() {
+    const { isLoading } = this.state;
+
     return (
       <header className='top-bar'>
         <h1 className='top-bar__title'>Star Wars API</h1>
         <input type='text' name='search-input' id='input' onChange={this.handleInputChange} />
         <button onClick={this.searchAllSections}>Search</button>
         <button onClick={this.handleBreak}>💀</button>
+        {isLoading && <Loader />}
       </header>
     );
   }
