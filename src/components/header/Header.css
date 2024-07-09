@@ -15,7 +15,7 @@
   white-space: nowrap;
 }
 
-input[type=text] {
+input[type='text'] {
   padding: 4px 6px;
   font-size: 18px;
   height: 24px;

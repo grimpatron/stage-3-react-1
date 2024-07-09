@@ -1,5 +1,5 @@
-import { Component } from "react";
-import "./Main.css";
+import { Component } from 'react';
+import './Main.css';
 
 interface ItemInterface {
   name: string;
@@ -22,12 +22,12 @@ class Main extends Component<PropsInterface> {
     const { searchResults } = this.props;
 
     return (
-      <main className="main">
+      <main className='main'>
         {searchResults.map((character: ItemInterface) => (
-          <div className="result-block" key={character.name}>
-            <h3 className="result-title">Name: {character.name}</h3>
+          <div className='result-block' key={character.name}>
+            <h3 className='result-title'>Name: {character.name}</h3>
 
-            <ul className="result-list">
+            <ul className='result-list'>
               {Object.entries(character).map(([key, value]) => (
                 <li key={key}>
                   <strong>{key}:</strong> {this.checkValue(value)}

@@ -1,7 +1,7 @@
-import { Component } from "react";
-import "./App.css";
-import Header from "./components/header/Header.tsx";
-import Main from "./components/main/Main.tsx";
+import { Component } from 'react';
+import './App.css';
+import Header from './components/header/Header.tsx';
+import Main from './components/main/Main.tsx';
 
 interface PropsInterface {}
 interface StateInterface {
@@ -38,10 +38,7 @@ class App extends Component<PropsInterface, StateInterface> {
 
 export default App;
 
-class ErrorBoundary extends Component<
-  { children?: React.ReactNode },
-  { hasError: boolean }
-> {
+class ErrorBoundary extends Component<{ children?: React.ReactNode }, { hasError: boolean }> {
   constructor(props: { children?: React.ReactNode }) {
     super(props);
     this.state = {
@@ -54,7 +51,7 @@ class ErrorBoundary extends Component<
   }
 
   componentDidCatch(error: object, errorInfo: object) {
-    console.error("Error caught:", error, errorInfo);
+    console.error('Error caught:', error, errorInfo);
   }
 
   render() {

@@ -1,14 +1,7 @@
-import React, { Component } from "react";
-import "./Header.css";
+import React, { Component } from 'react';
+import './Header.css';
 
-const apiSections: string[] = [
-  "people",
-  "planets",
-  "films",
-  "species",
-  "vehicles",
-  "starships",
-];
+const apiSections: string[] = ['people', 'planets', 'films', 'species', 'vehicles', 'starships'];
 
 interface HeaderStateInterface {
   searchResults: string;
@@ -24,8 +17,8 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
   constructor(props: PropsInterface) {
     super(props);
     this.state = {
-      searchResults: "",
-      searchQuery: "",
+      searchResults: '',
+      searchQuery: '',
       hasError: false,
     };
   }
@@ -40,7 +33,7 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
       const data = await response.json();
       return data.results;
     } catch (error) {
-      console.error("Error receiving data:", error);
+      console.error('Error receiving data:', error);
       return [];
     }
   };
@@ -49,19 +42,19 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
     const { searchQuery } = this.state;
     const trimmedQuery = searchQuery.trim();
 
-    const fetchPromises = apiSections.map((sectionName) => {
+    const fetchPromises = apiSections.map(sectionName => {
       const apiUrl = `https://swapi.dev/api/${sectionName}/?search=${encodeURIComponent(trimmedQuery)}`;
       return this.fetchData(apiUrl);
     });
 
     Promise.all(fetchPromises)
-      .then((results) => {
+      .then(results => {
         const combinedResults = results.flat();
         this.props.updateSearchResults(combinedResults);
         this.setState({ searchResults: JSON.stringify(combinedResults) });
         this.saveLastSearch(trimmedQuery);
       })
-      .catch((error) => console.error("Error fetching characters:", error));
+      .catch(error => console.error('Error fetching characters:', error));
   };
 
   handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,12 +62,12 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
   };
 
   saveLastSearch(query: string) {
-    localStorage.setItem("last-search", query);
+    localStorage.setItem('last-search', query);
   }
 
   loadLastSearch() {
-    const inputEl = document.querySelector("#input") as HTMLInputElement;
-    const lastSearch = localStorage.getItem("last-search");
+    const inputEl = document.querySelector('#input') as HTMLInputElement;
+    const lastSearch = localStorage.getItem('last-search');
     if (lastSearch !== null) {
       inputEl.value = lastSearch;
       this.setState({ searchQuery: lastSearch }, this.searchAllSections);
@@ -89,20 +82,15 @@ class Header extends Component<PropsInterface, HeaderStateInterface> {
 
   componentDidUpdate() {
     if (this.state.hasError) {
-      throw new Error("Error handle!");
+      throw new Error('Error handle!');
     }
   }
 
   render() {
     return (
-      <header className="top-bar">
-        <h1 className="top-bar__title">Star Wars API</h1>
-        <input
-          type="text"
-          name="search-input"
-          id="input"
-          onChange={this.handleInputChange}
-        />
+      <header className='top-bar'>
+        <h1 className='top-bar__title'>Star Wars API</h1>
+        <input type='text' name='search-input' id='input' onChange={this.handleInputChange} />
         <button onClick={this.searchAllSections}>Search</button>
         <button onClick={this.handleBreak}>💀</button>
       </header>

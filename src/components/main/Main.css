@@ -10,7 +10,7 @@ ul {
 
 .result-block {
   padding: 20px 10px;
-  border-bottom: 5px solid rgba(102, 102, 102, .3);
+  border-bottom: 5px solid rgba(102, 102, 102, 0.3);
 }
 .result-title {
   text-align: center;
