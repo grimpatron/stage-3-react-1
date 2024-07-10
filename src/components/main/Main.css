@@ -1,0 +1,22 @@
+ul {
+  margin: 0;
+}
+
+.main {
+  text-align: left;
+  height: max-content;
+  background-color: rgb(204, 255, 238);
+}
+
+.result-block {
+  padding: 20px 10px;
+  border-bottom: 5px solid rgba(102, 102, 102, 0.3);
+}
+.result-title {
+  text-align: center;
+  margin-top: 0;
+}
+span {
+  display: block;
+  white-space: pre-line;
+}
