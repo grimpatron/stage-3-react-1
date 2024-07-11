@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import './Main.css';
 
 interface ItemInterface {
@@ -9,36 +8,36 @@ interface PropsInterface {
   searchResults: ItemInterface[];
 }
 
-class Main extends Component<PropsInterface> {
-  checkValue(value: string | []) {
+function Main({ searchResults }: PropsInterface) {
+  const checkValue = (value: string | []) => {
     if (Array.isArray(value)) {
-      const listItems = value.map((item, index) => <li key={index}>{item}</li>);
-      return <ul>{listItems}</ul>;
+      const listItems = value.map((item, index) => (
+        <li key={index}>
+          {item}
+        </li>
+      ));
+      return <ol className='result-list--nested'>{listItems}</ol>;
     }
     return value;
-  }
+  };
 
-  render() {
-    const { searchResults } = this.props;
+  return (
+    <main className='main'>
+      {searchResults.map((character: ItemInterface, index) => (
+        <div className='result-block' key={index}>
+          <h3 className='result-title'>{character.name}</h3>
 
-    return (
-      <main className='main'>
-        {searchResults.map((character: ItemInterface, index) => (
-          <div className='result-block' key={index}>
-            <h3 className='result-title'>Name: {character.name}</h3>
-
-            <ul className='result-list'>
-              {Object.entries(character).map(([key, value]) => (
-                <li key={key}>
-                  <strong>{key}:</strong> {this.checkValue(value)}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </main>
-    );
-  }
+          <ul className='result-list'>
+            {Object.entries(character).map(([key, value]) => (
+              <li key={key}>
+                <strong>{key}:</strong> {checkValue(value)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </main>
+  );
 }
 
 export default Main;
