@@ -23,8 +23,8 @@ class Main extends Component<PropsInterface> {
 
     return (
       <main className='main'>
-        {searchResults.map((character: ItemInterface) => (
-          <div className='result-block' key={character.name}>
+        {searchResults.map((character: ItemInterface, index) => (
+          <div className='result-block' key={index}>
             <h3 className='result-title'>Name: {character.name}</h3>
 
             <ul className='result-list'>
