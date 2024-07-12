@@ -1,15 +1,18 @@
 import { Component, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from '../header/Header.tsx';
 import Main from '../main/Main.tsx';
+import Entity from '../main/Entity.tsx';
+import NotFound from '../notfound/NotFound.tsx';
 
 interface ItemInterface {
   name: string;
 }
 
 function App() {
-  const [parameters, setParameters] = useState<Array<object>>([]);
-  const updateSearchResults = (searchResults: Array<object>) => {
+  const [parameters, setParameters] = useState<string[]>([]);
+  const updateSearchResults = (searchResults: string[]) => {
     setParameters(searchResults);
   };
 
@@ -17,7 +20,13 @@ function App() {
     <>
       <ErrorBoundary>
         <Header updateSearchResults={updateSearchResults} />
-        <Main searchResults={parameters as ItemInterface[]} />
+        <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Main searchResults={parameters as unknown as ItemInterface[]} />} />
+          <Route path='/search/:page' element={<Entity/>} />
+          <Route path='*' element={<NotFound/>} />
+        </Routes>
+        </BrowserRouter>
       </ErrorBoundary>
     </>
   );

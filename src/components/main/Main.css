@@ -7,8 +7,34 @@ ul {
   height: max-content;
 }
 
+.result {
+  display: flex;
+  gap: 10px;
+}
+.result-full {
+  position: relative;
+  width: 50%;
+  /* height: 100%; */
+  /* margin: 10px 0; */
+  /* padding: 20px 10px; */
+  /* height: max-content; */
+  /* background-color: rgb(204, 255, 238); */
+}
+.result-full .result-block {
+  position: sticky;
+  top: 0;
+
+}
+.result-answer {
+  width: 50%;
+}
+.result-answer .result-block {
+  height: 170px;
+  overflow: hidden;
+
+}
 .result-block {
-  padding: 20px 10px;
+  padding: 10px 10px 20px;
   border-top: 5px solid rgba(102, 102, 102, 0.3);
   border-bottom: 5px solid rgba(102, 102, 102, 0.3);
   background-color: rgb(204, 255, 238);
@@ -18,8 +44,8 @@ ul {
 .result-title {
   text-align: center;
   background-color: #fff;
-  max-width: 200px;
-  margin: 0 auto;
+  max-width: 260px;
+  margin: 0 auto 10px;
   padding: 0 10px;
   border: 2px solid cadetblue;
 }
@@ -31,4 +57,18 @@ span {
 
 .result-list--nested {
   padding-left: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+  background-color: darkslategray;
+}
+
+.pagination-page {
+  font-size: 24px;
+  color: white;
 }
