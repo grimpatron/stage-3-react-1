@@ -11,11 +11,7 @@ interface PropsInterface {
 function Main({ searchResults }: PropsInterface) {
   const checkValue = (value: string | []) => {
     if (Array.isArray(value)) {
-      const listItems = value.map((item, index) => (
-        <li key={index}>
-          {item}
-        </li>
-      ));
+      const listItems = value.map((item, index) => <li key={index}>{item}</li>);
       return <ol className='result-list--nested'>{listItems}</ol>;
     }
     return value;
