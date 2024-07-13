@@ -7,12 +7,14 @@ interface ItemInterface {
 
 interface PropsInterface {
   searchResults: ItemInterface[];
+  onPageChange: (currentPage: number) => void;
 }
 
-function Main({ searchResults }: PropsInterface) {
+function Main({ searchResults, onPageChange }: PropsInterface) {
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
+  onPageChange(currentPage);
 
   const checkValue = (value: string | []) => {
     if (Array.isArray(value)) {
@@ -24,11 +26,10 @@ function Main({ searchResults }: PropsInterface) {
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const visibleResults = searchResults.slice(startIndex, startIndex + itemsPerPage);
-
   return (
     <main className='main'>
-      <div className="result">
-        <div className="result-answer">
+      <div className='result'>
+        <div className='result-answer'>
           {visibleResults.map((character: ItemInterface, index) => (
             <div className='result-block' key={index} onClick={() => setSelectedResultIndex(index)}>
               <h3 className='result-title'>{character.name}</h3>
@@ -42,7 +43,7 @@ function Main({ searchResults }: PropsInterface) {
             </div>
           ))}
         </div>
-        <div className="result-full">
+        <div className='result-full'>
           {selectedResultIndex !== null && (
             <div className='result-block'>
               <h3 className='result-title'>{searchResults[selectedResultIndex].name}</h3>
@@ -62,7 +63,9 @@ function Main({ searchResults }: PropsInterface) {
           <button onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>
             previous
           </button>
-          <span className='pagination-page'>{currentPage} / {Math.ceil(searchResults.length / itemsPerPage)}</span>
+          <span className='pagination-page'>
+            {currentPage} / {Math.ceil(searchResults.length / itemsPerPage)}
+          </span>
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={startIndex + itemsPerPage >= searchResults.length}

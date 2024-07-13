@@ -1,6 +1,4 @@
 function Entity() {
-  return (
-    <h1>Entity</h1>
-  )
+  return <h1>Entity</h1>;
 }
-export default Entity
+export default Entity;
