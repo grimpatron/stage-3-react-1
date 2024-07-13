@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from 'react';
 
 class ErrorBoundary extends Component<{ children?: React.ReactNode }, { hasError: boolean }> {
   constructor(props: { children?: React.ReactNode }) {
@@ -31,4 +31,4 @@ class ErrorBoundary extends Component<{ children?: React.ReactNode }, { hasError
   }
 }
 
-export default ErrorBoundary
+export default ErrorBoundary;

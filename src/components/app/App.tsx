@@ -16,20 +16,30 @@ function App() {
   const updateSearchResults = (searchResults: string[]) => {
     setParameters(searchResults);
   };
-  
+
   const handleCurrentPageChange = (newPage: number) => {
     history.pushState(null, '', `/search/${newPage}`);
     console.log('Current page received in parent:', newPage);
   };
-  
+
   return (
     <>
       <ErrorBoundary>
         <Header updateSearchResults={updateSearchResults} />
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />} />
-            <Route path='/search/:page' element={<Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />} />
+            <Route
+              path='/'
+              element={
+                <Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />
+              }
+            />
+            <Route
+              path='/search/:page'
+              element={
+                <Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />
+              }
+            />
             {/* <Route path='/search/:page' element={<Entity />} onPageChange={handleCurrentPageChange}/> */}
             <Route path='*' element={<NotFound />} />
           </Routes>
@@ -40,4 +50,3 @@ function App() {
 }
 
 export default App;
-

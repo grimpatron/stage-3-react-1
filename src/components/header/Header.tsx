@@ -1,16 +1,22 @@
 import { useState, useEffect, SetStateAction } from 'react';
+import Loader from '../loader/Loader';
 import './Header.css';
-import Loader from '../loader/Loadet';
 
 const apiSections = ['people', 'planets', 'films', 'species', 'vehicles', 'starships'];
 interface HeaderProps {
   updateSearchResults: (results: string[]) => void;
 }
 
+function useLocalStorage(key: string) {
+  const [value] = useState<string | null>(localStorage.getItem(key));
+  return value;
+}
+
 const Header = ({ updateSearchResults }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const lastSearchValue = useLocalStorage('last-search');
 
   const fetchData = async (apiUrl: RequestInfo | URL) => {
     try {
@@ -60,11 +66,10 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
 
   const loadLastSearch = () => {
     const inputEl = document.querySelector('#input') as HTMLInputElement;
-    const last = localStorage.getItem('last-search');
 
-    if (last != null) {
-      setSearchQuery(last);
-      inputEl.value = last;
+    if (lastSearchValue != null) {
+      setSearchQuery(lastSearchValue);
+      inputEl.value = lastSearchValue;
       searchAllSections();
     } else {
       searchAllSections();
