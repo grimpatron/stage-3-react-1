@@ -1,0 +1,25 @@
+.top-bar {
+  padding: 10px;
+  height: 50px;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: cadetblue;
+}
+
+.top-bar__title {
+  font-size: 2em;
+  line-height: 1.1;
+  margin: 0;
+  white-space: nowrap;
+}
+
+input[type='text'] {
+  padding: 4px 6px;
+  font-size: 18px;
+  height: 24px;
+  max-width: 240px;
+  width: 100%;
+  border-radius: 10px;
+}
