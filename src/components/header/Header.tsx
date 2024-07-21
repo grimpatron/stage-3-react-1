@@ -1,7 +1,10 @@
+window.global = window;
 import { useState, useEffect, SetStateAction } from 'react';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch';
 import Loader from '../loader/Loader';
 import './Header.css';
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
+import { useTheme } from '../../context/ThemeContext';
 
 const apiSections = ['people', 'planets', 'films', 'species', 'vehicles', 'starships'];
 interface HeaderProps {
@@ -28,11 +31,12 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [lastSearchValue, setLastSearchValue] = useLocalStorage('last-search');
+  const {theme, toggleTheme} = useTheme();
 
   const fetchData = async (apiUrl: string): Promise<string[]> => {
     try {
       const response = await fetch(apiUrl);
-      const data = await response.json() as ApiResponse;
+      const data = (await response.json()) as ApiResponse;
       return data.results;
     } catch (error) {
       console.error('Error receiving data:', error);
@@ -100,11 +104,12 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
   }, [hasError]);
 
   return (
-    <header className='top-bar'>
+    <header className={`top-bar  ${theme === 'light' ? 'light-theme' : 'dark-theme'}`}>
       <h1 className='top-bar__title'>Star Wars API</h1>
       <input type='text' name='search-input' id='input' onChange={handleInputChange} />
       <button onClick={searchClick}>Search</button>
       <button onClick={handleBreak}>💀</button>
+      <ThemeSwitcher theme={theme} toggleTheme={toggleTheme}/>
       {isLoading && <Loader />}
     </header>
   );

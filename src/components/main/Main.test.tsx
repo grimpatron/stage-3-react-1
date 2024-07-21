@@ -7,8 +7,6 @@ test('demo', () => {
   expect(true).toBe(true);
 });
 
-
-
 // import {render, screen} from '@testing-library/react';
 // import '@testing-library/jest-dom';
 // import Main from './Main';
@@ -21,7 +19,6 @@ test('demo', () => {
 //   const linkElement = screen.getByText(/learn react/i);
 //   expect (linkElement).toBeInTheDocument();
 // })
-
 
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';

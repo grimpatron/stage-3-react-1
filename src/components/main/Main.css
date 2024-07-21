@@ -38,6 +38,15 @@ ul {
   background-color: rgb(204, 255, 238);
   margin: 10px 0;
 }
+.result-block.dark {
+  color: rgb(204, 255, 238);
+  background-color: #242424;
+}
+.result-block.dark .result-title{
+  background-color: #233a2a;
+}
+
+
 
 .result-title {
   text-align: center;

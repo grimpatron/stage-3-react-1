@@ -1,10 +1,8 @@
-
 // import { render } from '@testing-library/react';
 
 // test('demo', () => {
 //   expect(true).toBe(true);
 // });
-
 
 // import Header from './Header';
 // import '@testing-library/jest-dom';
@@ -21,9 +19,6 @@
 //     // expect(btn).toBeInTheDocument();
 //   });
 // });
-
-
-
 
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
@@ -42,12 +37,12 @@ describe('Header Component', () => {
   });
 
   test('performs search on button click', async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ results: ['result1', 'result2'] }),
-      } as Response)
-    );
+    // global.fetch = jest.fn(() =>
+    //   Promise.resolve({
+    //     ok: true,
+    //     json: () => Promise.resolve({ results: ['result1', 'result2'] }),
+    //   } as Response)
+    // );
 
     render(<Header updateSearchResults={mockUpdateSearchResults} />);
     fireEvent.change(screen.getByRole('textbox'), { target: { value: 'test' } });
@@ -57,12 +52,12 @@ describe('Header Component', () => {
   });
 
   test('displays loader during search', async () => {
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ results: ['result1', 'result2'] }),
-      } as Response)
-    );
+    // global.fetch = jest.fn(() =>
+    //   Promise.resolve({
+    //     ok: true,
+    //     json: () => Promise.resolve({ results: ['result1', 'result2'] }),
+    //   } as Response)
+    // );
 
     render(<Header updateSearchResults={mockUpdateSearchResults} />);
     fireEvent.change(screen.getByRole('textbox'), { target: { value: 'test' } });
@@ -73,7 +68,7 @@ describe('Header Component', () => {
   });
 
   test('handles errors during fetch', async () => {
-    global.fetch = jest.fn(() => Promise.reject(new Error('Fetch error')));
+    // global.fetch = jest.fn(() => Promise.reject(new Error('Fetch error')));
 
     render(<Header updateSearchResults={mockUpdateSearchResults} />);
     fireEvent.change(screen.getByRole('textbox'), { target: { value: 'test' } });

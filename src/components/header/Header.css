@@ -1,3 +1,18 @@
+.light-theme {
+  --font-color: #213547;
+  --bg-color: cadetblue;
+}
+
+.dark-theme {
+  --font-color: #fff;
+  --bg-color: #242424;
+}
+
+header {
+  color: var(--font-color);
+  background-color: var(--bg-color);
+}
+
 .top-bar {
   padding: 10px;
   height: 50px;
@@ -5,7 +20,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: cadetblue;
 }
 
 .top-bar__title {

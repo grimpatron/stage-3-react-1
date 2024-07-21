@@ -21,7 +21,7 @@ class ErrorBoundary extends Component<{ children?: React.ReactNode }, { hasError
       return (
         <>
           <h2>💀 💀 💀</h2>
-          <h3 className="eb-message">You've just broken the application.</h3>
+          <h3 className='eb-message'>You've just broken the application.</h3>
           <h2>💀 💀 💀</h2>
         </>
       );

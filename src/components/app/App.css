@@ -26,3 +26,13 @@
 .read-the-docs {
   color: #888;
 }
+
+.app {
+  height: 100%;
+}
+.app.dark {
+  background-color: #263a2f;
+}
+.app.white {
+  background-color: #ffffff;
+}

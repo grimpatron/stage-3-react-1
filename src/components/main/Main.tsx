@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Main.css';
+import { useTheme } from '../../context/ThemeContext';
 
 interface ItemInterface {
   name: string;
@@ -11,6 +12,7 @@ interface PropsInterface {
 }
 
 function Main({ searchResults, onPageChange }: PropsInterface) {
+  const {theme} = useTheme();
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
@@ -31,7 +33,7 @@ function Main({ searchResults, onPageChange }: PropsInterface) {
       <div className='result'>
         <div className='result-answer'>
           {visibleResults.map((character: ItemInterface, index) => (
-            <div className='result-block' key={index} onClick={() => setSelectedResultIndex(index)}>
+            <div className={`result-block ${theme}`} key={index} onClick={() => setSelectedResultIndex(index)}>
               <h3 className='result-title'>{character.name}</h3>
               <ul className='result-list'>
                 {Object.entries(character).map(([key, value]) => (
