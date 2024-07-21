@@ -1,4 +1,5 @@
 import { useState, useEffect, SetStateAction } from 'react';
+import fetch from 'node-fetch';
 import Loader from '../loader/Loader';
 import './Header.css';
 
@@ -7,24 +8,35 @@ interface HeaderProps {
   updateSearchResults: (results: string[]) => void;
 }
 
+interface ApiResponse {
+  results: string[];
+}
+
 function useLocalStorage(key: string) {
-  const [value] = useState<string | null>(localStorage.getItem(key));
-  return value;
+  const [value, setValue] = useState<string | null>(localStorage.getItem(key));
+
+  const setStoredValue = (newValue: string) => {
+    localStorage.setItem(key, newValue);
+    setValue(newValue);
+  };
+
+  return [value, setStoredValue] as const;
 }
 
 const Header = ({ updateSearchResults }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const lastSearchValue = useLocalStorage('last-search');
+  const [lastSearchValue, setLastSearchValue] = useLocalStorage('last-search');
 
-  const fetchData = async (apiUrl: RequestInfo | URL) => {
+  const fetchData = async (apiUrl: string): Promise<string[]> => {
     try {
       const response = await fetch(apiUrl);
-      const data = await response.json();
+      const data = await response.json() as ApiResponse;
       return data.results;
     } catch (error) {
       console.error('Error receiving data:', error);
+      setHasError(true);
       return [];
     }
   };
@@ -32,7 +44,7 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
   const searchClick = () => {
     searchAllSections();
     const trimmedQuery = searchQuery.trim();
-    saveLastSearch(trimmedQuery);
+    setLastSearchValue(trimmedQuery);
   };
 
   const searchAllSections = () => {
@@ -50,7 +62,10 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
         const combinedResults = results.flat();
         updateSearchResults(combinedResults);
       })
-      .catch(error => console.error('Error fetching characters:', error))
+      .catch(error => {
+        console.error('Error fetching characters:', error);
+        setHasError(true);
+      })
       .finally(() => {
         setIsLoading(false);
       });
@@ -60,18 +75,12 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
     setSearchQuery(event.target.value);
   };
 
-  const saveLastSearch = (query: string) => {
-    localStorage.setItem('last-search', query);
-  };
-
   const loadLastSearch = () => {
     const inputEl = document.querySelector('#input') as HTMLInputElement;
 
     if (lastSearchValue != null) {
       setSearchQuery(lastSearchValue);
       inputEl.value = lastSearchValue;
-      searchAllSections();
-    } else {
       searchAllSections();
     }
   };
