@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Header from '../header/Header.tsx';
-import Main from '../main/Main.tsx';
-import NotFound from '../notfound/NotFound.tsx';
-import ErrorBoundary from '../errorboundary/ErrorBoundary.tsx';
+import Header from '../Header/Header.tsx';
+import Main from '../Main/Main.tsx';
+import NotFound from '../Notfound/NotFound.tsx';
+import ErrorBoundary from '../Errorboundary/ErrorBoundary.tsx';
 import { useTheme } from '../../context/ThemeContext.tsx';
 
 interface ItemInterface {
-  name: string;
+  [key: string]: string;
 }
 
 function App() {
-  const {theme} = useTheme();
+  const { theme } = useTheme();
   const [parameters, setParameters] = useState<string[]>([]);
   const updateSearchResults = (searchResults: string[]) => {
     setParameters(searchResults);
@@ -26,24 +26,24 @@ function App() {
   return (
     <div className={`app ${theme}`}>
       <ErrorBoundary>
-          <Header updateSearchResults={updateSearchResults}/>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path='/'
-                element={
-                  <Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />
-                }
-              />
-              <Route
-                path='/search/:page'
-                element={
-                  <Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />
-                }
-              />
-              <Route path='*' element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
+        <Header updateSearchResults={updateSearchResults} />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />
+              }
+            />
+            <Route
+              path='/search/:page'
+              element={
+                <Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />
+              }
+            />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       </ErrorBoundary>
     </div>
   );

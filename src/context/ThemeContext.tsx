@@ -6,7 +6,7 @@ interface ContextThemeInterface {
 }
 
 interface ThemeProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export const ThemeContext = createContext<ContextThemeInterface | undefined>(undefined);
@@ -21,15 +21,10 @@ export const useTheme = () => {
   return context;
 };
 
-
-export const ThemeContextProvider = ({children}: ThemeProviderProps) => {
+export const ThemeContextProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState('light');
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
   };
-  return (
-    <ThemeContext.Provider value={{theme, toggleTheme}}>
-      {children}
-    </ThemeContext.Provider>
-  )
-}
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
+};

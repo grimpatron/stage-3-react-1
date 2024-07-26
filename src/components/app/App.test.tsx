@@ -1,14 +1,42 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
+import { ThemeContextProvider } from '../../context/ThemeContext';
 
-test('demo', () => {
-  expect(true).toBe(true);
-});
+jest.mock('../Header/Header.tsx', () => () => <div>Mocked Header</div>);
+jest.mock('../Main/Main.tsx', () => () => <div>Mocked Main</div>);
+jest.mock('../Notfound/NotFound.tsx', () => () => <div>Mocked NotFound</div>);
+jest.mock('../Errorboundary/ErrorBoundary.tsx', () => ({ children }: { children: React.ReactNode }) => (
+  <div>{children}</div>
+));
 
-test('Renders the main page', async () => {
-  render(<App />);
-  await waitFor(() => {
-    expect(screen.getByText(/Star Wars API/i)).toBeInTheDocument();
+describe('App Component', () => {
+  test('renders without crashing', () => {
+    render(
+      <ThemeContextProvider>
+        <App />
+      </ThemeContextProvider>
+    );
+    expect(screen.getByText('Mocked Header')).toBeInTheDocument();
+  });
+
+  test('renders Main component on root path', () => {
+    render(
+      <ThemeContextProvider>
+        <App />
+      </ThemeContextProvider>
+    );
+    expect(screen.getByText('Mocked Main')).toBeInTheDocument();
+  });
+
+  test('renders NotFound component on unknown path', () => {
+    window.history.pushState({}, 'Test page', '/unknown');
+    render(
+      <ThemeContextProvider>
+        <App />
+      </ThemeContextProvider>
+    );
+    expect(screen.getByText('Mocked NotFound')).toBeInTheDocument();
   });
 });

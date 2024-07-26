@@ -42,11 +42,9 @@ ul {
   color: rgb(204, 255, 238);
   background-color: #242424;
 }
-.result-block.dark .result-title{
+.result-block.dark .result-title {
   background-color: #233a2a;
 }
-
-
 
 .result-title {
   text-align: center;
