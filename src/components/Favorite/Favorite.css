@@ -1,0 +1,14 @@
+.light-theme {
+  --font-color: #213547;
+  --bg-color: cadetblue;
+}
+
+.dark-theme {
+  --font-color: #fff;
+  --bg-color: #242424;
+}
+
+.favorite {
+  color: var(--font-color);
+  /* background-color: var(--bg-color); */
+}

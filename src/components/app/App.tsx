@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
 import Header from '../Header/Header.tsx';
 import Main from '../Main/Main.tsx';
+import Favorite from '../Favorite/Favorite.tsx';
 import NotFound from '../Notfound/NotFound.tsx';
 import ErrorBoundary from '../Errorboundary/ErrorBoundary.tsx';
 import { useTheme } from '../../context/ThemeContext.tsx';
+import './App.css';
 
 interface ItemInterface {
   [key: string]: string;
@@ -20,14 +21,13 @@ function App() {
 
   const handleCurrentPageChange = (newPage: number) => {
     history.pushState(null, '', `/search/${newPage}`);
-    console.log('Current page received in parent:', newPage);
   };
 
   return (
     <div className={`app ${theme}`}>
       <ErrorBoundary>
-        <Header updateSearchResults={updateSearchResults} />
         <BrowserRouter>
+        <Header updateSearchResults={updateSearchResults} />
           <Routes>
             <Route
               path='/'
@@ -36,11 +36,12 @@ function App() {
               }
             />
             <Route
-              path='/search/:page'
+              path='/search/:id'
               element={
                 <Main searchResults={parameters as unknown as ItemInterface[]} onPageChange={handleCurrentPageChange} />
               }
             />
+            <Route path='/favorite' element={<Favorite />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         </BrowserRouter>

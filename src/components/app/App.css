@@ -5,10 +5,9 @@
   margin: 0 auto;
   text-align: center;
 }
-html:has( .app.dark ) {
-  background-color: #263a2f;
+html:has(.app.dark) {
+  background-color: #292f2b;
 }
-
 
 .logo {
   height: 6em;
@@ -34,4 +33,3 @@ html:has( .app.dark ) {
 .app {
   height: 100%;
 }
-

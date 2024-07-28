@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import './Main.css';
-import { useTheme } from '../../context/ThemeContext';
+// import { useTheme } from '../../context/ThemeContext';
 import useSingleSearch from '../../hooks/useSingleSearch';
-import InfoCard from '../InfoCard/InfoCard';
+// import InfoCard from '../InfoCard/InfoCard';
+import InfoCardFull from '../InfoCard/InfoCardFull';
 
 interface ItemInterface {
+  name: string;
   [key: string]: string;
 }
 
@@ -14,7 +16,7 @@ interface PropsInterface {
 }
 
 function Main({ searchResults, onPageChange }: PropsInterface) {
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
@@ -28,14 +30,9 @@ function Main({ searchResults, onPageChange }: PropsInterface) {
   return (
     <main className='main'>
       <div className='result'>
-
         <div className='result-answer'>
           {visibleResults.map((character: ItemInterface, index) => (
-            <div className={`result-block ${theme}`} key={index} onClick={() => {setSelectedResultIndex(index); console.log(character);
-            }}>
-              <h3 className='result-title'>{character.name}</h3>
-              <InfoCard character={character} />
-            </div>
+            <InfoCardFull character={character} index={index} setSelectedResultIndex={setSelectedResultIndex} key={index} />
           ))}
         </div>
 
@@ -44,14 +41,12 @@ function Main({ searchResults, onPageChange }: PropsInterface) {
             <p>Loading...</p>
           ) : hasError ? (
             <p>Error loading data.</p>
-          ) : selectedResult ? (
-            <div className={`result-block ${theme}`}>
-              <h3 className='result-title'>{selectedResult.name}</h3>
-              <InfoCard character={selectedResult} />
-            </div>
-          ) : ( <></> )}
+          ) : selectedResult && 'name' in selectedResult ? (
+            <InfoCardFull character={selectedResult as ItemInterface} index={0} setSelectedResultIndex={setSelectedResultIndex} />
+          ) : (
+            <></>
+          )}
         </div>
-
       </div>
       {searchResults.length >= itemsPerPage && (
         <div className='pagination'>

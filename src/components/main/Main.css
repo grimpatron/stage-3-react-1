@@ -11,14 +11,30 @@ ul {
   display: flex;
   gap: 10px;
 }
+.result-top-bar {
+  display: flex;
+}
+.result-checkbox {
+  position: relative;
+  height: 0;
+  width: 0;
+}
+.result-checkbox::before {
+  position: absolute;
+  left: -30px;
+  font-size: 18px;
+  line-height: 20px;
+  content: '⭐';
+  filter: grayscale(100%);
+  cursor: pointer;
+  padding: 5px;
+}
+.result-checkbox:checked:before {
+  filter: grayscale(0%);
+}
 .result-full {
   position: relative;
   width: 50%;
-  /* height: 100%; */
-  /* margin: 10px 0; */
-  /* padding: 20px 10px; */
-  /* height: max-content; */
-  /* background-color: rgb(204, 255, 238); */
 }
 .result-full .result-block {
   position: sticky;

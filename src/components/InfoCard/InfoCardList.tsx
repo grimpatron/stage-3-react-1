@@ -1,8 +1,8 @@
-interface InfoCardProps {
+interface InfoCardListProps {
   character: Record<string, string>;
 }
 
-function InfoCard({ character }: InfoCardProps) {
+function InfoCardList({ character }: InfoCardListProps) {
   const checkValue = (value: string | string[]) => {
     if (Array.isArray(value)) {
       const listItems = value.map((item, index) => <li key={index}>{item}</li>);
@@ -22,4 +22,4 @@ function InfoCard({ character }: InfoCardProps) {
   );
 }
 
-export default InfoCard;
+export default InfoCardList;

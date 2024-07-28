@@ -1,5 +1,6 @@
 .light-theme {
   --font-color: #213547;
+  --font-color-hover: #2a5858;
   --bg-color: cadetblue;
 }
 
@@ -7,6 +8,11 @@
   --font-color: #fff;
   --bg-color: #242424;
 }
+
+.dark-theme .top-bar__title:hover {
+  color: #bacaba;
+}
+
 
 header {
   color: var(--font-color);
@@ -27,6 +33,11 @@ header {
   line-height: 1.1;
   margin: 0;
   white-space: nowrap;
+  color: inherit;
+  transition: .25s all ease-in-out;
+}
+.top-bar__title:hover {
+  color: var(--font-color-hover);
 }
 
 input[type='text'] {
@@ -36,4 +47,22 @@ input[type='text'] {
   max-width: 240px;
   width: 100%;
   border-radius: 10px;
+  border: none;
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+
+
+.top-bar__favorite {
+  font-size: 2em;
+  position: relative;
+}
+.favorite-counter {
+  position: absolute;
+  right: 5px;
+  top: 0;
+  font-size: 15px;
+  font-weight: bold;
+  color: gold;
+  -webkit-text-stroke: 1px #000;
 }

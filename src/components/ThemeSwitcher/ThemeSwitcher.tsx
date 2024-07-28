@@ -4,7 +4,7 @@ interface Props {
 }
 
 const ThemeSwitcher = ({ theme, toggleTheme }: Props) => {
-  return <button onClick={toggleTheme}>{theme === 'light' ? 'Dark' : 'Light'} mode</button>;
+  return <button onClick={toggleTheme}>{theme === 'light' ? '🌔' : '🌒'} mode</button>;
 };
 
 export default ThemeSwitcher;
