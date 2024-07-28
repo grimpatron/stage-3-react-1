@@ -18,7 +18,7 @@ interface RemoveFromFavoriteAction {
 export type FavoriteActionTypes = AddToFavoriteAction | RemoveFromFavoriteAction;
 
 const initialState: FavoriteState = {
-  favorites: []
+  favorites: [],
 };
 
 const favoriteReducer = (state = initialState, action: FavoriteActionTypes): FavoriteState => {
@@ -26,13 +26,13 @@ const favoriteReducer = (state = initialState, action: FavoriteActionTypes): Fav
     case ADD_TO_FAVORITE:
       return {
         ...state,
-        favorites: [...state.favorites, action.payload]
+        favorites: [...state.favorites, action.payload],
       };
 
     case REMOVE_FROM_FAVORITE:
       return {
         ...state,
-        favorites: state.favorites.filter(favorite => favorite !== action.payload)
+        favorites: state.favorites.filter(favorite => favorite !== action.payload),
       };
 
     default:

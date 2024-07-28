@@ -13,7 +13,6 @@
   color: #bacaba;
 }
 
-
 header {
   color: var(--font-color);
   background-color: var(--bg-color);
@@ -34,7 +33,7 @@ header {
   margin: 0;
   white-space: nowrap;
   color: inherit;
-  transition: .25s all ease-in-out;
+  transition: 0.25s all ease-in-out;
 }
 .top-bar__title:hover {
   color: var(--font-color-hover);
@@ -48,10 +47,10 @@ input[type='text'] {
   width: 100%;
   border-radius: 10px;
   border: none;
-  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  box-shadow:
+    rgb(204, 219, 232) 3px 3px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
-
-
 
 .top-bar__favorite {
   font-size: 2em;

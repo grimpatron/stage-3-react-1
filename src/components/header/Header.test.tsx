@@ -18,4 +18,3 @@ jest.mock('../../context/ThemeContext', () => ({
 }));
 
 jest.mock('../../hooks/useLocalStorage', () => jest.fn(() => ['', jest.fn()]));
-

@@ -27,7 +27,7 @@ function App() {
     <div className={`app ${theme}`}>
       <ErrorBoundary>
         <BrowserRouter>
-        <Header updateSearchResults={updateSearchResults} />
+          <Header updateSearchResults={updateSearchResults} />
           <Routes>
             <Route
               path='/'

@@ -50,13 +50,11 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
   useEffect(() => {
     getSearch();
   }, []);
-  
+
   useEffect(() => {
     const length = storeData.favorites.length;
-    console.log(storeData, length);
     setFavoriteCnt(length);
   }, [storeData, storeData.favorites]);
-  
 
   const handleBreak = () => {
     setHasError(true);
@@ -70,11 +68,15 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
 
   return (
     <header className={`top-bar  ${theme === 'light' ? 'light-theme' : 'dark-theme'}`}>
-      <NavLink to='/' className='top-bar__title'>Star Wars API</NavLink>
+      <NavLink to='/' className='top-bar__title'>
+        Star Wars API
+      </NavLink>
       <input type='text' name='search-input' id='input' onChange={handleInputChange} />
       <button onClick={searchClick}>🔍 search</button>
       <button onClick={handleBreak}>💀</button>
-      <NavLink to='/favorite' className='top-bar__favorite'>⭐️<span className='favorite-counter'>{favoriteCnt}</span></NavLink>
+      <NavLink to='/favorite' className='top-bar__favorite'>
+        ⭐️<span className='favorite-counter'>{favoriteCnt}</span>
+      </NavLink>
       <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
       {isLoading && <Loader />}
     </header>

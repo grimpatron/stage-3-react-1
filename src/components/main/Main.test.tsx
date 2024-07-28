@@ -1,7 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Main from './Main';
 import useSingleSearch from '../../hooks/useSingleSearch';
+
+import Main from './Main';
 
 jest.mock('../../hooks/useSingleSearch');
 

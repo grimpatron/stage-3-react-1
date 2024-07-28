@@ -1,8 +1,7 @@
-import { useTheme } from "../../context/ThemeContext";
-import { useSelector } from "react-redux";
-import "./Favorite.css";
-// import { useState } from "react";
-import InfoCardFull from "../InfoCard/InfoCardFull";
+import { useTheme } from '../../context/ThemeContext';
+import { useSelector } from 'react-redux';
+import './Favorite.css';
+import InfoCardFull from '../InfoCard/InfoCardFull';
 
 interface RootState {
   favoriteReducer: {
@@ -14,13 +13,8 @@ interface ItemInterface {
   [key: string]: string;
 }
 
-
 function Favorite() {
   const storeData = useSelector((state: RootState) => state.favoriteReducer);
-  // const [favCard, setFavCard] = useState([]);
-  
-  console.log(storeData, ' - storeData', storeData.favorites);
-  
   const { theme } = useTheme();
 
   return (
@@ -28,11 +22,10 @@ function Favorite() {
       <h3>Favorite List</h3>
 
       {storeData.favorites.map((character: ItemInterface, index: number) => (
-        <InfoCardFull character={character} index={index} setSelectedResultIndex={ () => void {} }/>
+        <InfoCardFull character={character} index={index} setSelectedResultIndex={() => void {}} />
       ))}
-
     </div>
-  )
+  );
 }
 
 export default Favorite;

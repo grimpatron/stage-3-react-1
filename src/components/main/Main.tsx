@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import './Main.css';
-// import { useTheme } from '../../context/ThemeContext';
 import useSingleSearch from '../../hooks/useSingleSearch';
-// import InfoCard from '../InfoCard/InfoCard';
 import InfoCardFull from '../InfoCard/InfoCardFull';
 
 interface ItemInterface {
@@ -16,7 +14,6 @@ interface PropsInterface {
 }
 
 function Main({ searchResults, onPageChange }: PropsInterface) {
-  // const { theme } = useTheme();
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
@@ -32,7 +29,12 @@ function Main({ searchResults, onPageChange }: PropsInterface) {
       <div className='result'>
         <div className='result-answer'>
           {visibleResults.map((character: ItemInterface, index) => (
-            <InfoCardFull character={character} index={index} setSelectedResultIndex={setSelectedResultIndex} key={index} />
+            <InfoCardFull
+              character={character}
+              index={index}
+              setSelectedResultIndex={setSelectedResultIndex}
+              key={index}
+            />
           ))}
         </div>
 
@@ -42,7 +44,11 @@ function Main({ searchResults, onPageChange }: PropsInterface) {
           ) : hasError ? (
             <p>Error loading data.</p>
           ) : selectedResult && 'name' in selectedResult ? (
-            <InfoCardFull character={selectedResult as ItemInterface} index={0} setSelectedResultIndex={setSelectedResultIndex} />
+            <InfoCardFull
+              character={selectedResult as ItemInterface}
+              index={0}
+              setSelectedResultIndex={setSelectedResultIndex}
+            />
           ) : (
             <></>
           )}

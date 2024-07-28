@@ -1,9 +1,7 @@
-import { useTheme } from "../../context/ThemeContext";
-import InfoCardList from "./InfoCardList";
+import { useTheme } from '../../context/ThemeContext';
+import InfoCardList from './InfoCardList';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite, removeFromFavorite } from '../../store/actions';
-// import { Key } from "react";
-
 
 interface RootState {
   favoriteReducer: {
@@ -21,9 +19,11 @@ const InfoCardFull: React.FC<InfoCardFullProps> = ({ character, index, setSelect
   const { theme } = useTheme();
   const dispatch = useDispatch();
   const storeData = useSelector((state: RootState) => state.favoriteReducer);
-  // const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
 
-  const clickFavorite = (event: React.ChangeEvent<HTMLInputElement>, character: { name: string; [key: string]: string }) => {
+  const clickFavorite = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    character: { name: string; [key: string]: string }
+  ) => {
     if (event.target.checked) {
       dispatch(addToFavorite(character));
     } else {
@@ -35,25 +35,25 @@ const InfoCardFull: React.FC<InfoCardFullProps> = ({ character, index, setSelect
     <div
       className={`result-block ${theme}`}
       key={index}
-      onClick={(e) => {
+      onClick={e => {
         if ((e.target as HTMLElement).tagName !== 'INPUT') {
           setSelectedResultIndex(index);
         }
       }}
     >
-    <div className="result-top-bar">
-      <h3 className='result-title'>{character.name}</h3>
-      <input 
-        className='result-checkbox' 
-        type="checkbox" 
-        name={character.name}
-        onChange={(e) => clickFavorite(e, character)}
-        checked={character.name ? storeData.favorites.some(fav => fav.name === character.name) : false}
-      />
+      <div className='result-top-bar'>
+        <h3 className='result-title'>{character.name}</h3>
+        <input
+          className='result-checkbox'
+          type='checkbox'
+          name={character.name}
+          onChange={e => clickFavorite(e, character)}
+          checked={character.name ? storeData.favorites.some(fav => fav.name === character.name) : false}
+        />
+      </div>
+      <InfoCardList character={character} />
     </div>
-    <InfoCardList character={character} />
-  </div>
-  )
-}
+  );
+};
 
 export default InfoCardFull;

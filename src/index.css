@@ -40,7 +40,7 @@ button {
   font-family: inherit;
   background-color: #e2e2e2;
   cursor: pointer;
-  transition: all .25s ease-in-out;
+  transition: all 0.25s ease-in-out;
   user-select: none;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
