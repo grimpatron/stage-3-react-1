@@ -1,12 +1,14 @@
+'use client';
+
 import { useState, useEffect, SetStateAction } from 'react';
+import Link from 'next/link';
 import Loader from '../Loader/Loader';
-import './Header.css';
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
-import { useTheme } from '../../context/ThemeContext';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import useSearch from '../../hooks/useSearch';
-import { NavLink } from 'react-router-dom';
+import useTheme from '../../context/useTheme';
 import { useSelector } from 'react-redux';
+import './Header.css';
 
 interface HeaderProps {
   updateSearchResults: (results: string[]) => void;
@@ -18,6 +20,7 @@ interface RootState {
     favorites: object[];
   };
 }
+
 const Header = ({ updateSearchResults }: HeaderProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [lastSearchValue, setLastSearchValue] = useLocalStorage('last-search');
@@ -36,11 +39,11 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
   const handleInputChange = (event: { target: { value: SetStateAction<string> } }) => {
     setSearchQuery(event.target.value);
   };
-
+  
   const getSearch = () => {
     const inputEl = document.querySelector('#input') as HTMLInputElement;
 
-    if (lastSearchValue != null) {
+    if (lastSearchValue) {
       setSearchQuery(lastSearchValue);
       inputEl.value = lastSearchValue;
       searchAllSections(lastSearchValue);
@@ -52,9 +55,9 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
   }, []);
 
   useEffect(() => {
-    const length = storeData.favorites.length;
+    const length = storeData?.favorites?.length || 0;
     setFavoriteCnt(length);
-  }, [storeData, storeData.favorites]);
+  }, [storeData]);
 
   const handleBreak = () => {
     setHasError(true);
@@ -68,15 +71,15 @@ const Header = ({ updateSearchResults }: HeaderProps) => {
 
   return (
     <header className={`top-bar  ${theme === 'light' ? 'light-theme' : 'dark-theme'}`}>
-      <NavLink to='/' className='top-bar__title'>
+      <Link className='top-bar__title' href={'/'}>
         Star Wars API
-      </NavLink>
+      </Link>
       <input type='text' name='search-input' id='input' onChange={handleInputChange} />
       <button onClick={searchClick}>🔍 search</button>
       <button onClick={handleBreak}>💀</button>
-      <NavLink to='/favorite' className='top-bar__favorite'>
+      <Link className='top-bar__favorite' href={'/favorite'}>
         ⭐️<span className='favorite-counter'>{favoriteCnt}</span>
-      </NavLink>
+      </Link>
       <ThemeSwitcher theme={theme} toggleTheme={toggleTheme} />
       {isLoading && <Loader />}
     </header>

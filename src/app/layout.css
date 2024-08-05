@@ -1,10 +1,11 @@
-#root {
+.container {
   max-width: 960px;
   width: 100%;
   height: 100vh;
   margin: 0 auto;
   text-align: center;
 }
+
 html:has(.app.dark) {
   background-color: #292f2b;
 }

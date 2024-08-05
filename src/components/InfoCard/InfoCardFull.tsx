@@ -1,4 +1,4 @@
-import { useTheme } from '../../context/ThemeContext';
+import useTheme from '../../context/useTheme';
 import InfoCardList from './InfoCardList';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToFavorite, removeFromFavorite } from '../../store/actions';
@@ -48,7 +48,7 @@ const InfoCardFull: React.FC<InfoCardFullProps> = ({ character, index, setSelect
           type='checkbox'
           name={character.name}
           onChange={e => clickFavorite(e, character)}
-          checked={character.name ? storeData.favorites.some(fav => fav.name === character.name) : false}
+          checked={character.name ? storeData?.favorites?.some(fav => fav.name === character.name) : false}
         />
       </div>
       <InfoCardList character={character} />

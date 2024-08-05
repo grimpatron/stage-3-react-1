@@ -1,6 +1,8 @@
+'use client';
+
 import { useState } from 'react';
 
-const apiSections = ['people', 'planets', 'films', 'species', 'vehicles', 'starships'];
+const IPI_SECTIONS = ['people', 'planets', 'films', 'species', 'vehicles', 'starships'];
 
 interface ApiResponse {
   results: string[];
@@ -23,7 +25,7 @@ const useSearch = (updateSearchResults: (results: string[]) => void) => {
   };
 
   const searchAllSections = (query: string) => {
-    const fetchPromises = apiSections.map(sectionName => {
+    const fetchPromises = IPI_SECTIONS.map(sectionName => {
       const apiUrl = `https://swapi.dev/api/${sectionName}/?search=${encodeURIComponent(query)}`;
       return fetchData(apiUrl);
     });

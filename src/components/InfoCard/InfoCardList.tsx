@@ -1,5 +1,5 @@
 interface InfoCardListProps {
-  character: Record<string, string>;
+  character: Record<string, string | string[]>;
 }
 
 function InfoCardList({ character }: InfoCardListProps) {

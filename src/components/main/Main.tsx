@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import './Main.css';
 import useSingleSearch from '../../hooks/useSingleSearch';
@@ -13,7 +15,7 @@ interface PropsInterface {
   onPageChange: (currentPage: number) => void;
 }
 
-function Main({ searchResults, onPageChange }: PropsInterface) {
+function Main({ searchResults = [], onPageChange }: PropsInterface) {
   const [itemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedResultIndex, setSelectedResultIndex] = useState<number | null>(null);
@@ -22,7 +24,7 @@ function Main({ searchResults, onPageChange }: PropsInterface) {
   onPageChange(currentPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const visibleResults = searchResults.slice(startIndex, startIndex + itemsPerPage);
+  const visibleResults = Array.isArray(searchResults) ? searchResults.slice(startIndex, startIndex + itemsPerPage) : [];
 
   return (
     <main className='main'>
@@ -65,9 +67,7 @@ function Main({ searchResults, onPageChange }: PropsInterface) {
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={startIndex + itemsPerPage >= searchResults.length}
-          >
-            next
-          </button>
+          >next</button>
         </div>
       )}
     </main>

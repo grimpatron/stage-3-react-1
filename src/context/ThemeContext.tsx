@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+'use client';
+
+import { createContext, ReactNode, useState } from 'react';
 
 interface ContextThemeInterface {
   toggleTheme: () => void;
@@ -10,16 +12,6 @@ interface ThemeProviderProps {
 }
 
 export const ThemeContext = createContext<ContextThemeInterface | undefined>(undefined);
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-
-  if (!context) {
-    throw new Error('Error context');
-  }
-
-  return context;
-};
 
 export const ThemeContextProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState('light');

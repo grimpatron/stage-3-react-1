@@ -1,12 +1,15 @@
-import { useLocation } from 'react-router-dom';
+"use client"
+
+import { useRouter } from 'next/router';
+
 function NotFound() {
-  const location = useLocation();
+  const router = useRouter();
 
   return (
     <>
       <h1>Not Found 404</h1>
       <div>
-        Nothing found for this search: <b>{location.pathname}</b>
+        Nothing found for this search: <b>{router.asPath}</b>
       </div>
     </>
   );

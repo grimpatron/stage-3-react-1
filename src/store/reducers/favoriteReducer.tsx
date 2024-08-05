@@ -1,43 +1,32 @@
-const ADD_TO_FAVORITE = 'ADD_TO_FAVORITE';
-const REMOVE_FROM_FAVORITE = 'REMOVE_FROM_FAVORITE';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+// Определяем состояние
 export interface FavoriteState {
-  favorites: object[];
+  favorites: string[];
 }
-
-interface AddToFavoriteAction {
-  type: typeof ADD_TO_FAVORITE;
-  payload: object;
-}
-
-interface RemoveFromFavoriteAction {
-  type: typeof REMOVE_FROM_FAVORITE;
-  payload: object;
-}
-
-export type FavoriteActionTypes = AddToFavoriteAction | RemoveFromFavoriteAction;
 
 const initialState: FavoriteState = {
   favorites: [],
 };
 
-const favoriteReducer = (state = initialState, action: FavoriteActionTypes): FavoriteState => {
-  switch (action.type) {
-    case ADD_TO_FAVORITE:
-      return {
-        ...state,
-        favorites: [...state.favorites, action.payload],
-      };
+// Определяем типы действий
+export type FavoriteActionTypes =
+  | { type: 'ADD_TO_FAVORITE'; payload: string }
+  | { type: 'REMOVE_FROM_FAVORITE'; payload: string };
 
-    case REMOVE_FROM_FAVORITE:
-      return {
-        ...state,
-        favorites: state.favorites.filter(favorite => favorite !== action.payload),
-      };
+// Создаем slice
+const favoriteSlice = createSlice({
+  name: 'favorite',
+  initialState,
+  reducers: {
+    addToFavorite: (state, action: PayloadAction<string>) => {
+      state.favorites.push(action.payload);
+    },
+    removeFromFavorite: (state, action: PayloadAction<string>) => {
+      state.favorites = state.favorites.filter(favorite => favorite !== action.payload);
+    },
+  },
+});
 
-    default:
-      return state;
-  }
-};
-
-export default favoriteReducer;
+export const { addToFavorite, removeFromFavorite } = favoriteSlice.actions;
+export default favoriteSlice.reducer;
