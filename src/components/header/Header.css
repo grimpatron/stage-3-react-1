@@ -1,0 +1,67 @@
+.light-theme {
+  --font-color: #213547;
+  --font-color-hover: #2a5858;
+  --bg-color: cadetblue;
+}
+
+.dark-theme {
+  --font-color: #fff;
+  --bg-color: #242424;
+}
+
+.dark-theme .top-bar__title:hover {
+  color: #bacaba;
+}
+
+header {
+  color: var(--font-color);
+  background-color: var(--bg-color);
+}
+
+.top-bar {
+  padding: 10px;
+  height: 50px;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-bar__title {
+  font-size: 2em;
+  line-height: 1.1;
+  margin: 0;
+  white-space: nowrap;
+  color: inherit;
+  transition: 0.25s all ease-in-out;
+}
+.top-bar__title:hover {
+  color: var(--font-color-hover);
+}
+
+input[type='text'] {
+  padding: 4px 6px;
+  font-size: 18px;
+  height: 24px;
+  max-width: 240px;
+  width: 100%;
+  border-radius: 10px;
+  border: none;
+  box-shadow:
+    rgb(204, 219, 232) 3px 3px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+
+.top-bar__favorite {
+  font-size: 2em;
+  position: relative;
+}
+.favorite-counter {
+  position: absolute;
+  right: 5px;
+  top: 0;
+  font-size: 15px;
+  font-weight: bold;
+  color: gold;
+  -webkit-text-stroke: 1px #000;
+}
