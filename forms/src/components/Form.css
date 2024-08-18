@@ -1,0 +1,24 @@
+.form__line {
+  margin-top: 10px;
+  background-color: aliceblue;
+  padding: 10px 40px;
+  border-radius: 5px;
+}
+.form__input {
+  display: flex;
+}
+label {
+  display: block;
+  width: 150px;
+}
+.form__error {
+  font-size: 14px;
+  color: brown;
+}
+button {
+  display: block;
+  margin: 20px auto 10px;
+}
+label[for='terms'] {
+  width: auto;
+}
