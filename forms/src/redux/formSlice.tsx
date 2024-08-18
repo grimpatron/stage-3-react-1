@@ -3,15 +3,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface FormInterface {
+  termsAccepted?: boolean;
   name: string;
   age: number;
   email: string;
-  password1: string;
-  password2: string;
+  password: string;
+  confirmPassword: string;
   gender: string;
-  termsAccepted: boolean;
   picture: string;
   country: string;
+  target?: EventTarget;
+  password1?: string;
+  password2?: string;
+  validationError?: string;
 }
 
 const formSlice = createSlice({

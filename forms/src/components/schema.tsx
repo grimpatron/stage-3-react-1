@@ -19,6 +19,14 @@ const schema = yup.object().shape({
       /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*!])[0-9a-zA-Z@#$%^&*!]*$/,
       'Password must include at least 1 digit, 1 uppercase letter, 1 lowercase letter, and 1 special character'
     ),
+  confirmPassword: yup
+    .string()
+    .required('Password is required')
+    .min(8, 'Password must contain at least 8 characters')
+    .matches(
+      /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*!])[0-9a-zA-Z@#$%^&*!]*$/,
+      'Password must include at least 1 digit, 1 uppercase letter, 1 lowercase letter, and 1 special character'
+    ),
   gender: yup.string().required('Gender is required'),
   termsAccepted: yup.boolean().oneOf([true], 'You must accept the terms and conditions'),
   picture: yup.string().required('Picture is required'),
